@@ -9,4 +9,4 @@ resources:
 - namespace.yaml
 - cf-secret.yaml
 - cert-manager-chart.yaml
-  #- cert-manager-config.yaml
+- cert-manager-config.yaml
