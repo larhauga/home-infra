@@ -5,4 +5,4 @@ metadata:
 
 resources:
 - system-upgrade-controller.yaml
-  #- plan.yaml
+- plan.yaml
