@@ -24,4 +24,5 @@ spec:
             service:
               name: unifi
               port:
-                 name: https
+                      #name: https
+                number: 8443
