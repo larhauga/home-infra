@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: traefik
         namespace: traefik
-      version: 9.12.3
+      version: 9.15.2
   interval: 1h0m0s
   install:
     remediation:
@@ -24,6 +24,9 @@ spec:
     - "--serverstransport.insecureskipverify=true"
     - "--providers.kubernetesingress.ingressendpoint.publishedservice=traefik/traefik"
     - "--log.level=DEBUG"
+    dashboard:
+      enabled: true
+      domain: traefik.int.larshaugan.net
     logs:
       general:
         # By default, the logs use a text format (common), but you can

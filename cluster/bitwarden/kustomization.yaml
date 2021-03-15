@@ -1,0 +1,5 @@
+namespace: bitwarden
+resources:
+- namespace.yaml
+- helm-repo-bitwarden.yaml
+- bitwarden-chart.yaml

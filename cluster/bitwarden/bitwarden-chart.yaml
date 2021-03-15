@@ -1,0 +1,41 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: bitwarden
+  namespace: bitwarden
+spec:
+  releaseName: bitwarden
+  chart:
+    spec:
+      sourceRef:
+        kind: HelmRepository
+        name: bitwarden
+        namespace: bitwarden
+      chart: bitwarden-k8s
+      #version: bitwarden
+  interval: 1h0m0s
+  install:
+    remediation:
+      retries: 3
+  values:
+    service:
+      type: LoadBalancer
+    ingress:
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        external-dns.alpha.kubernetes.io/hostname: bitwarden.int.larshaugan.net
+        traefik.ingress.kubernetes.io/service.serversscheme: https
+        traefik.ingress.kubernetes.io/router.tls: "true"
+
+      hosts:
+        - bitwarden.int.larshaugan.net
+      tls:
+      - secretName: bitwarden-tls
+        hosts:
+          - bitwarden.int.larshaugan.net
+
+    persistence:
+      enabled: true
+      storageClass: local-path

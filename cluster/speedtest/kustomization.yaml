@@ -1,0 +1,7 @@
+
+namespace: speedtest
+
+resources:
+- namespace.yaml
+- ingress.yaml
+- speedtest.yaml

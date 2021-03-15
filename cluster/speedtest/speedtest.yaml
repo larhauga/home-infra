@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: speedtest
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: speedtest.int.larshaugan.net
+spec:
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: speedtest
+  type: LoadBalancer
+  loadBalancerIP: 10.0.1.207
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: speedtest
+spec:
+  selector:
+    matchLabels:
+      app: speedtest
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: speedtest
+    spec:
+      containers:
+      # This is the only image they have..
+      - image: openspeedtest/latest:speedtest
+        name: speedtest
+        ports:
+        - containerPort: 8080
+          name: speedtest
