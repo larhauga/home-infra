@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: openhab
+  labels:
+   app: openhab
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: openhab
+    spec:
+#      hostNetwork: true
+      nodeSelector:
+        #kubernetes.io/arch: amd64
+        feature.node.kubernetes.io/usb-02_1cf1_0030.present: true
+        #node-role.kubernetes.io/worker: worker         
+      containers:
+      - name: openhab
+        image: openhab/openhab:3.1.0.M4
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8443
+          name: https
+          protocol: TCP
+        - containerPort: 8101
+          name: console
+          protocol: TCP
+        volumeMounts:
+        - name: etc-localtime
+          mountPath: /etc/localtime
+          readOnly: true
+        - name: openhab-conf
+          mountPath: /openhab/conf
+          readOnly: false
+        - name: openhab-userdata
+          mountPath: /openhab/userdata
+          readOnly: false
+        - name: openhab-addons
+          mountPath: /openhab/addons
+          readOnly: false
+        - name: openhab-lib
+          mountPath: /openhab/lib
+          readOnly: false
+        - name: openhab-java
+          mountPath: /openhab/.java
+          readOnly: false
+        - name: openhab-karaf
+          mountPath: /openhab/.karaf
+          readOnly: false
+      volumes:
+      - name: etc-localtime
+        hostPath:
+          path: /usr/share/zoneinfo/Europe/Stockholm
+      - name: openhab-conf
+        persistentVolumeClaim:
+          claimName: openhab-conf-claim
+#        hostPath:
+#          path: /openhab/conf
+      - name: openhab-userdata
+        persistentVolumeClaim:
+          claimName: openhab-userdata-claim
+#       hostPath:
+#         path: /openhab/userdata
+      - name: openhab-addons
+#        hostPath:
+#          path: /openhab/addons
+        persistentVolumeClaim:
+          claimName: openhab-addons-claim
+      - name: openhab-lib
+        persistentVolumeClaim:
+          claimName: openhab-lib-claim
+#        hostPath:
+#          path: /openhab/lib
+      - name: openhab-java
+        persistentVolumeClaim:
+          claimName: openhab-java-claim
+#        hostPath:
+#          path: /openhab/.java
+      - name: openhab-karaf
+        persistentVolumeClaim:
+          claimName: openhab-karaf-claim
+#        hostPath:
+#          path: /openhab/.karaf
+      terminationGracePeriodSeconds: 300

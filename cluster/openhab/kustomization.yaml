@@ -1,0 +1,8 @@
+namespace: openhab
+resources:
+- claims.yaml
+- service.yaml
+- statefulset.yaml
+- namespace.yaml
+- ingress.yaml
+

@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openhab
+  namespace: openhab
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    external-dns.alpha.kubernetes.io/hostname: oh.int.larshaugan.net
+    treafik.ingress.kubernetes.io/service.serverscheme: https
+    treafik.ingress.kubernetes.io/ruter.tls: "true"
+spec:
+  tls:
+    - secretName: oh-tls
+      hosts:
+      - oh.int.larshaugan.net
+  rules:
+  - host: oh.int.larshaugan.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: openhab
+            port:
+              name: openhab-http
+
