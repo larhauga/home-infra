@@ -1,0 +1,4 @@
+resources:
+- nfd-master.yaml
+- nfd-worker.yaml
+- nfd-worker-arm.yaml
