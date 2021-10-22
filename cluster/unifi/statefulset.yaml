@@ -24,7 +24,7 @@ spec:
             - name: UNIFI_STDOUT
               value: "true"
           image: jacobalberty/unifi:stable-6
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           name: unifi
           ports:
             - containerPort: 3478 # UDP	3478	Port used for STUN.
