@@ -5,6 +5,10 @@ metadata:
   labels:
    app: openhab
 spec:
+  serviceName: openhab
+  selector:
+    matchLabels: 
+      app: openhab
   replicas: 1
   template:
     metadata:
@@ -13,13 +17,20 @@ spec:
     spec:
 #      hostNetwork: true
       nodeSelector:
-        #kubernetes.io/arch: amd64
-        feature.node.kubernetes.io/usb-02_1cf1_0030.present: true
+             #feature.node.kubernetes.io/usb-02_0658_0200.present: "true"
+        kubernetes.io/arch: amd64
         #node-role.kubernetes.io/worker: worker         
       containers:
       - name: openhab
         image: openhab/openhab:3.1.0.M4
         imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        env:
+        - name: USER_ID
+          value: "111"
+        - name: GROUP_ID
+          value: "117"
         ports:
         - containerPort: 8080
           name: http
@@ -52,20 +63,37 @@ spec:
         - name: openhab-karaf
           mountPath: /openhab/.karaf
           readOnly: false
+        - name: zwave
+          mountPath: /dev/zwave
+#      initContainers:
+#      - name: git-clone
+#        image: alpine/git
+#        args:
+#        - clone
+#        - --single-branch
+#        - --
+#        - https://github.com/larhauga/home.git
+#        - /openhab/conf
+#        volumeMounts:
+#        - mountPath: /openhab/conf
+#          name: openhab-conf
+#          readOnly: false
       volumes:
       - name: etc-localtime
         hostPath:
           path: /usr/share/zoneinfo/Europe/Stockholm
       - name: openhab-conf
-        persistentVolumeClaim:
-          claimName: openhab-conf-claim
-#        hostPath:
-#          path: /openhab/conf
+        hostPath:
+          path: /etc/openhab-container
+          type: Directory
+        #persistentVolumeClaim:
+        #  claimName: openhab-conf-claim
       - name: openhab-userdata
-        persistentVolumeClaim:
-          claimName: openhab-userdata-claim
-#       hostPath:
-#         path: /openhab/userdata
+        #persistentVolumeClaim:
+        #  claimName: openhab-userdata-claim
+        hostPath:
+          path: /var/lib/openhab-container
+          type: Directory
       - name: openhab-addons
 #        hostPath:
 #          path: /openhab/addons
@@ -84,6 +112,9 @@ spec:
       - name: openhab-karaf
         persistentVolumeClaim:
           claimName: openhab-karaf-claim
+      - name: zwave
+        hostPath:
+          path: /dev/zwave
 #        hostPath:
 #          path: /openhab/.karaf
       terminationGracePeriodSeconds: 300

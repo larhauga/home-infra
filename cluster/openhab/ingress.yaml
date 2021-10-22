@@ -4,11 +4,11 @@ metadata:
   name: openhab
   namespace: openhab
   annotations:
-    kubernetes.io/ingress.class: "traefik"
+    kubernetes.io/ingress.class: traefik
     cert-manager.io/cluster-issuer: letsencrypt-prod
     external-dns.alpha.kubernetes.io/hostname: oh.int.larshaugan.net
-    treafik.ingress.kubernetes.io/service.serverscheme: https
-    treafik.ingress.kubernetes.io/ruter.tls: "true"
+    traefik.ingress.kubernetes.io/service.serverscheme: https
+    traefik.ingress.kubernetes.io/ruter.tls: "true"
 spec:
   tls:
     - secretName: oh-tls
