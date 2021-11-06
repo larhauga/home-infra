@@ -65,6 +65,8 @@ spec:
           readOnly: false
         - name: zwave
           mountPath: /dev/zwave
+        - name: zigbee
+          mountPath: /dev/zigbee
 #      initContainers:
 #      - name: git-clone
 #        image: alpine/git
@@ -115,6 +117,9 @@ spec:
       - name: zwave
         hostPath:
           path: /dev/zwave
+      - name: zigbee
+        hostPath:
+          path: /dev/zigbee
 #        hostPath:
 #          path: /openhab/.karaf
       terminationGracePeriodSeconds: 300
