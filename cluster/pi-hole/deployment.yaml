@@ -51,7 +51,7 @@ spec:
         - name: DNS2
           value: 127.0.0.1#5054 # Cloudflared runs on port 54
         image: pihole/pihole:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         name: pihole
         ports:
         - containerPort: 80
