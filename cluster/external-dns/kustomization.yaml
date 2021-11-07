@@ -8,4 +8,7 @@ namespace: external-dns
 resources:
 - namespace.yaml
 - cf-secret.yaml
-- external-dns-cf.yaml
+- deployment.yaml
+- sa.yaml
+- role.yaml
+- rolebinding.yaml
