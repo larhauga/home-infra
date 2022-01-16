@@ -129,6 +129,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: whitelist
+  namespace: pihole-dns
 data:
   whitelist.txt: |
     www.googleadservices.com
