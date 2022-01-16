@@ -101,7 +101,7 @@ spec:
             defaultMode: 420
             name: pihole-custom-dnsmasq
         - configMap:
-            defaultMode: 420
+            #defaultMode: 420
             name: pihole-ftl
           name: pihole-ftl
 ---
