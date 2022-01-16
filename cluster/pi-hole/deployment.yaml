@@ -82,7 +82,7 @@ spec:
           mountPath: /etc/pihole/regex.list
           subPath: regex.list
         - mountPath: /etc/pihole/pihole-FTL.conf
-          name: ftl
+          name: pihole-ftl
           subPath: pihole-FTL.conf
         securityContext:
           capabilities:        
@@ -111,7 +111,7 @@ metadata:
   name: pihole-ftl
   namespace: pihole-dns
 data:
-  pihole-ftl.conf: |
+  pihole-FTL.conf: |
     except-interface=nonexisting
 ---
 apiVersion: v1
