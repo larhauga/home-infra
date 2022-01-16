@@ -74,6 +74,8 @@ spec:
           name: client-udp
           protocol: UDP
         volumeMounts:
+        - mountPath: /etc/pihole
+          name: config
         - mountPath: /etc/dnsmasq.d/02-custom.conf
           name: pihole-custom-dnsmasq
           subPath: 02-custom.conf
@@ -96,6 +98,9 @@ spec:
               - NET_ADMIN  
       restartPolicy: Always
       volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: pihole
         - name: pihole-adlists
           configMap:
             name: pihole-adlists
