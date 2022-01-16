@@ -83,6 +83,10 @@ spec:
         - name: pihole-regex
           mountPath: /etc/pihole/regex.list
           subPath: regex.list
+        - mountPath: /etc/pihole/whitelist.txt
+          name: whitelist
+          subPath: whitelist.txt
+
 #        - mountPath: /etc/pihole/pihole-FTL.conf
 #          name: pihole-ftl
 #          subPath: pihole-FTL.conf
@@ -102,6 +106,11 @@ spec:
           configMap:
             defaultMode: 420
             name: pihole-custom-dnsmasq
+        - configMap:
+            defaultMode: 420
+            name: whitelist
+          name: whitelist
+
 #        - configMap:
 #            #defaultMode: 420
 #            name: pihole-ftl
@@ -115,6 +124,15 @@ spec:
 #data:
 #  pihole-FTL.conf: |
 #    except-interface=nonexisting
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: whitelist
+data:
+  whitelist.txt: |
+    www.googleadservices.com
+
 ---
 apiVersion: v1
 kind: ConfigMap
