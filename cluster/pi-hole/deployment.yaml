@@ -48,6 +48,8 @@ spec:
         - name: ServerIP
           #value: pihole.int.larshaugan.net
           value: 10.0.1.253
+        - name: DNSMASQ_LISTENING
+          value: 'all'
         - name: DNS1
           value: 127.0.0.1#5054 # Cloudflared runs on port 54
         - name: DNS2
@@ -81,9 +83,9 @@ spec:
         - name: pihole-regex
           mountPath: /etc/pihole/regex.list
           subPath: regex.list
-        - mountPath: /etc/pihole/pihole-FTL.conf
-          name: pihole-ftl
-          subPath: pihole-FTL.conf
+#        - mountPath: /etc/pihole/pihole-FTL.conf
+#          name: pihole-ftl
+#          subPath: pihole-FTL.conf
         securityContext:
           capabilities:        
             add:
@@ -100,19 +102,19 @@ spec:
           configMap:
             defaultMode: 420
             name: pihole-custom-dnsmasq
-        - configMap:
-            #defaultMode: 420
-            name: pihole-ftl
-          name: pihole-ftl
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: pihole-ftl
-  namespace: pihole-dns
-data:
-  pihole-FTL.conf: |
-    except-interface=nonexisting
+#        - configMap:
+#            #defaultMode: 420
+#            name: pihole-ftl
+#          name: pihole-ftl
+#---
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: pihole-ftl
+#  namespace: pihole-dns
+#data:
+#  pihole-FTL.conf: |
+#    except-interface=nonexisting
 ---
 apiVersion: v1
 kind: ConfigMap
