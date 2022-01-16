@@ -103,7 +103,7 @@ spec:
         - configMap:
             defaultMode: 420
             name: pihole-ftl
-          name: ftl
+          name: pihole-ftl
 ---
 apiVersion: v1
 kind: ConfigMap
