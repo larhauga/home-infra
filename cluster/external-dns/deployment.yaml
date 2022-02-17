@@ -16,11 +16,11 @@ spec:
       serviceAccountName: external-dns
       containers:
       - name: external-dns
-        image: k8s.gcr.io/external-dns/external-dns:v0.10.0
+        image: k8s.gcr.io/external-dns/external-dns:v0.10.2
         args:
         - --source=service
         - --source=ingress
-        - --domain-filter=larshaugan.net # (optional) limit to only example.com domains; change to match the zone created above.
+        #- --domain-filter=larshaugan.net # (optional) limit to only example.com domains; change to match the zone created above.
         #- --zone-id-filter= # (optional) limit to a specific zone.
         - --provider=cloudflare
         - --log-level=debug
