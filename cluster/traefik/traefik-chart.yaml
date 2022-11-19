@@ -13,20 +13,58 @@ spec:
         kind: HelmRepository
         name: traefik
         namespace: traefik
-      version: 10.6.1
+      version: 20.3.0
   interval: 1h0m0s
   install:
+    crds: CreateReplace
     remediation:
       retries: 3
+  upgrade:
+    crds: CreateReplace
   values:
     additionalArguments:
     #  - "--providers.kubernetesingress.ingressclass=traefik-internal"
     - "--serverstransport.insecureskipverify=true"
     - "--providers.kubernetesingress.ingressendpoint.publishedservice=traefik/traefik"
     - "--log.level=DEBUG"
-    dashboard:
+    pilot:
       enabled: true
-      domain: traefik.int.larshaugan.net
+      dashboard: true
+    ingressRoute:
+      dashboard:
+        enabled: true
+        domain: traefik.int.larshaugan.net
+        # Custom match rule with host domain
+        matchRule: Host(`traefik.int.larshaugan.net`)
+        entryPoints: ["websecure"]
+        # Add custom middlewares : authentication and redirection
+        middlewares:
+          - name: traefik-dashboard-redirect
+          - name: traefik-dashboard-auth
+    
+    # Create the custom middlewares used by the IngressRoute dashboard (can also be created in another way).
+    extraObjects:
+      - apiVersion: traefik.containo.us/v1alpha1
+        kind: Middleware
+        metadata:
+          name: traefik-dashboard-auth
+        spec:
+          basicAuth:
+            secret: traefik-dashboard-auth-secret
+    
+      - apiVersion: traefik.containo.us/v1alpha1
+        kind: Middleware
+        metadata:
+          name: traefik-dashboard-redirect
+        spec:
+          redirectRegex:
+            permanent: true
+            regex: ^(https?:\/\/(\[[\w:.]+\]|[\w\._-]+)(:\d+)?)\/$
+            replacement: ${1}/dashboard/
+    
+#    experimental:
+#      kubernetesGateway:
+#        enabled: true
     logs:
       general:
         # By default, the logs use a text format (common), but you can
