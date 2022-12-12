@@ -22,7 +22,7 @@ spec:
         #node-role.kubernetes.io/worker: worker         
       containers:
       - name: openhab
-        image: openhab/openhab:3.4.0.M4
+        image: openhab/openhab:3.4.0.M6
         imagePullPolicy: Always
         securityContext:
           privileged: true

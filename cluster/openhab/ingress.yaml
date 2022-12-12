@@ -9,6 +9,7 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: oh.int.larshaugan.net
     traefik.ingress.kubernetes.io/service.serverscheme: https
     traefik.ingress.kubernetes.io/ruter.tls: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-redirectscheme@kubernetescrd
 spec:
   tls:
     - secretName: oh-tls
