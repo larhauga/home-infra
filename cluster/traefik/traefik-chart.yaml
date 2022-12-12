@@ -61,7 +61,16 @@ spec:
             permanent: true
             regex: ^(https?:\/\/(\[[\w:.]+\]|[\w\._-]+)(:\d+)?)\/$
             replacement: ${1}/dashboard/
-    
+
+      - apiVersion: traefik.containo.us/v1alpha1
+        kind: Middleware
+        metadata:
+          name: redirectscheme
+        spec:
+          redirectScheme:
+            scheme: https
+            permanent: true
+
 #    experimental:
 #      kubernetesGateway:
 #        enabled: true
